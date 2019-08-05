@@ -75,7 +75,14 @@ export default class MapLeaflet extends Component {
     }
     
     return (
+
+      
       <div id="map">
+  <div className="flex flex-col w-3/4 mx-auto my-12 items-center">
+      <h1>Super cool page</h1>
+    I am a button
+    </div>
+        
         <Map className="markercluster-map"  style={{ height: "100vh" }} center={position} zoom={this.state.zoom} maxZoom={18}>
           <TileLayer
             url="https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png"

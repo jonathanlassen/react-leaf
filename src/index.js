@@ -26,14 +26,11 @@ function App() {
               <Link to='/register'><a className="inline-block text-sm px-4 py-2 leading-none border rounded text-white border-white hover:border-transparent hover:text-blue hover:bg-white mt-4 lg:mt-0">Register</a></Link>
             </div>
           </div> 
-        </nav>
-        <section >   
-          <main className="main">    
-              <Route path="/" exact component={MapLeaflet} />
-              <Route path="/login" exact component={Login} />
-              <Route path="/register" exact component={Register} />
-          </main>
-        </section>
+        </nav>  
+        <Route path="/" exact component={MapLeaflet} />
+        <Route path="/login" exact component={Login} />
+        <Route path="/register" exact component={Register} />
+        <Route path="/shop/:id" component={MapLeaflet} />
       </div>
     </Router>
   );

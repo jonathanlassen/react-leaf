@@ -179,6 +179,11 @@ export default class MapLeaflet extends Component {
 
 
   componentDidMount() {
+
+
+    const { match: { params } } = this.props;
+    console.log(params.id)
+
     axios.get(`http://localhost:3000/leaf`)
       .then(res => {
         const shops = res.data;
@@ -227,7 +232,9 @@ export default class MapLeaflet extends Component {
             <ListShops shops={this.state.tempshops} func={this.handleShopClick}/>
           </MarkerClusterGroup>
          
-          </Map>
+          </Map> 
+
+          <div onClick={() => this.props.history.push('/login')}>test</div>
         </div>
       
 

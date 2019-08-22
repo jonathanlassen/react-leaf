@@ -20,18 +20,19 @@ const images =['https://res.cloudinary.com/dcdv6emgi/image/upload/w_400/v1565051
 
 function returnRandomImage(id){
   const random = id.toString().split('').pop();
-  console.log(images[random])
   return images[random];
 }
 
 function RightListShops(props) {
-  const shops = props.shops;
+  let shops = props.shops;
+  if (shops.length > 25)
+    shops = shops.slice(0, 24);
+
     const show = shops.map((shop) => 
         <div key={shop.id} className="p-3 m-2 xl:w-5/12 lg:w-full rounded overflow-hidden shadow-lg">
           <img className=" h-32 w-full overflow-hidden"  alt="" src={returnRandomImage(shop.id)}  className="object-cover object-top h-48 w-full overflow-hidden" ></img>
             <div className="font-bold text-l mb-2"> {shop.properties.Name}</div>
-            <p v-if="data.properties.Zip" className="text-grey-darker text-sm">
-            
+            <p v-if="data.properties.Zip" className="text-grey-darker text-sm">    
               </p>
               <p className="text-grey-darker text-sm">
                 Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptatibus quia, nulla! Maiores et perferendis eaque, exercitationem praesentium nihil.
@@ -59,10 +60,9 @@ function RightListShops(props) {
   function ListShops(props) {
     const shops = props.shops;
     const show = shops.map((shop) =>
-        <Marker key={shop.id} position={shop.geometry.coordinates} icon={customMarker} onClick={(e) => props.func(e,shop.id)}>
-            <Popup>
+        <Marker key={shop.id} position={shop.geometry.coordinates} icon={customMarker} onClick={(e) => props.func(e,shop.id)} autoPan={'false'}>
+            <Popup >
                 {shop.properties.Name}
-                <img src="testinghere" />
             </Popup>
         </Marker>
     );
@@ -89,22 +89,24 @@ export default class MapLeaflet extends Component {
       singleinfo: {}
     };
     this.handleShopClick = this.handleShopClick.bind(this);
+    this.closeRightSingle = this.closeRightSingle.bind(this);
     this.refMap = React.createRef();
   }
 
   handleShopClick(e, shopid) {
-    const popup = e.target.getPopup();
-    const content = popup.setContent('yeah');
-   
-    
-
+  //  const popup = e.target.getPopup();
+   // const content = popup.setContent('yeah');
     axios.get(`http://localhost:3000/shop/`+shopid)
     .then(res => {
-      this.setState({ singleinfo: res.data });
+      this.setState({singleinfo: res.data });
       this.setState({single:true})
-     
     }) 
   }
+
+  closeRightSingle () {
+    this.setState({single:false});
+  }
+
 
    onMoveEnd = (e) => {
     var d = new Date();
@@ -119,35 +121,27 @@ export default class MapLeaflet extends Component {
     }
 
     const bounds = e.target.getBounds();
-        const tempshops = this.state.shops.filter((shop) => (    
+        let tempshops = this.state.shops.filter((shop) => (    
           bounds._northEast.lat > shop.geometry.coordinates[0] && 
           bounds._northEast.lng > shop.geometry.coordinates[1] &&
           bounds._southWest.lat < shop.geometry.coordinates[0] && 
           bounds._southWest.lng < shop.geometry.coordinates[1] 
         ));
-
-        this.setState({toshowshops:tempshops});
-
+        this.setState({tempshops:tempshops});
    }
 
   componentDidMount() {
-
     const { match: { params } } = this.props;
-    console.log(params.id)
-
     axios.get(`http://localhost:3000/leaf`)
       .then(res => {
         const shops = res.data;
-       
         shops.map(shop => {
             let tempshop = {
               "id": shop.id, "type": "Feature", "properties": { "Name": shop.title, "Zip": shop.zip }, "geometry": { "type": "Point", "coordinates": [  parseFloat(shop.lat),parseFloat(shop.long) ] } 
             };
-           this.state.tempshops.push(tempshop);
-           // 
+           this.state.shops.push(tempshop);
           })
-          // this.setState({ singleinfo: res.data });
-          
+          // this.setState({ singleinfo: res.data });  
       }) 
   }
 
@@ -185,8 +179,7 @@ export default class MapLeaflet extends Component {
          
           </Map>
         </div>
-    
-        {this.state.single===false ? <RightListShops shops={this.state.toshowshops} /> : <RightSingle  shop={this.state.singleinfo} />}
+        {this.state.single===false ? <RightListShops shops={this.state.tempshops} /> : <RightSingle  shop={this.state.singleinfo} closeRightSingle={this.closeRightSingle}/>}
       </div>
     );
   }

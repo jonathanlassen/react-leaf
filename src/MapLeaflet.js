@@ -5,7 +5,9 @@ import L from "leaflet";
 import axios from 'axios';
 import MarkerClusterGroup from 'react-leaflet-markercluster';
 import LocateControl from './LocateControl';
-import { LeafletConsumer } from 'react-leaflet';
+import RightSingle from "./RightSingle";
+import { authHeader } from './auth/AuthHeader';
+
 require('react-leaflet-markercluster/dist/styles.min.css');
 
 const customMarker = new L.icon({
@@ -22,51 +24,10 @@ function returnRandomImage(id){
   return images[random];
 }
 
-function RightListSingleShop() {
-  return (  
-    <div className="w-2/5 flex flex-row flex-wrap overflow-auto p-8 items-stretch h-screen justify-around">  
-      <div className="rounded overflow-hidden shadow-lg">
-
-<div className="px-3 py-3">
-<img className="w-full overflow-hidden object-cover object-top h-48 w-full overflow-hidden"  alt="" />
-  <div className="font-bold text-l mb-2"></div>
-  <p className="text-grey-darker text-sm">
-
-  </p>
-  <p  className="text-grey-darker text-sm">
-    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptatibus quia, nulla! Maiores et perferendis eaque, exercitationem praesentium nihil.
-  </p>
-  <div>
-    (978) 213-8369
-  </div>
-  <div>
-    1258 Gorham St.
-    Lowell, MA 01852
-  </div>
-  <div>
-
-  </div>
-
-
-
-
-
-    </div> 
-    </div> 
-    </div> 
-    );
-
-}
-
 function RightListShops(props) {
   const shops = props.shops;
     const show = shops.map((shop) => 
-    
-      
-
         <div key={shop.id} className="p-3 m-2 xl:w-5/12 lg:w-full rounded overflow-hidden shadow-lg">
-
-
           <img className=" h-32 w-full overflow-hidden"  alt="" src={returnRandomImage(shop.id)}  className="object-cover object-top h-48 w-full overflow-hidden" ></img>
             <div className="font-bold text-l mb-2"> {shop.properties.Name}</div>
             <p v-if="data.properties.Zip" className="text-grey-darker text-sm">
@@ -82,10 +43,8 @@ function RightListShops(props) {
               1258 Gorham St.
               Lowell, MA 01852
             </div>
-        </div>
-    
+        </div> 
     );
-
 
     return (  
       <div className="w-2/5 flex flex-row flex-wrap overflow-auto p-8 items-stretch h-screen justify-around">  
@@ -109,17 +68,11 @@ function RightListShops(props) {
     );
     
     return (  
-
-
         <div >  
         {show}
         </div> 
     );
   }
-
-
-
-
 export default class MapLeaflet extends Component {
   constructor(props) {
     super(props);
@@ -133,21 +86,24 @@ export default class MapLeaflet extends Component {
       toshowshops: [],
       lastrun:'',
       single: false,
+      singleinfo: {}
     };
     this.handleShopClick = this.handleShopClick.bind(this);
     this.refMap = React.createRef();
   }
 
-
-
-
   handleShopClick(e, shopid) {
     const popup = e.target.getPopup();
     const content = popup.setContent('yeah');
+   
+    
 
-    console.log(content);
-    this.setState({single:true})
-
+    axios.get(`http://localhost:3000/shop/`+shopid)
+    .then(res => {
+      this.setState({ singleinfo: res.data });
+      this.setState({single:true})
+     
+    }) 
   }
 
    onMoveEnd = (e) => {
@@ -162,10 +118,7 @@ export default class MapLeaflet extends Component {
       this.setState({lastrun:n});
     }
 
-
     const bounds = e.target.getBounds();
-
-
         const tempshops = this.state.shops.filter((shop) => (    
           bounds._northEast.lat > shop.geometry.coordinates[0] && 
           bounds._northEast.lng > shop.geometry.coordinates[1] &&
@@ -177,9 +130,7 @@ export default class MapLeaflet extends Component {
 
    }
 
-
   componentDidMount() {
-
 
     const { match: { params } } = this.props;
     console.log(params.id)
@@ -195,7 +146,7 @@ export default class MapLeaflet extends Component {
            this.state.tempshops.push(tempshop);
            // 
           })
-           this.setState({ shops: this.state.tempshops });
+          // this.setState({ singleinfo: res.data });
           
       }) 
   }
@@ -232,20 +183,10 @@ export default class MapLeaflet extends Component {
             <ListShops shops={this.state.tempshops} func={this.handleShopClick}/>
           </MarkerClusterGroup>
          
-          </Map> 
-
-          <div onClick={() => this.props.history.push('/login')}>test</div>
+          </Map>
         </div>
-      
-
-
-        {this.state.single===false ? <RightListShops shops={this.state.toshowshops} /> : <RightListSingleShop  />}
-
-          
-
-
     
-
+        {this.state.single===false ? <RightListShops shops={this.state.toshowshops} /> : <RightSingle  shop={this.state.singleinfo} />}
       </div>
     );
   }

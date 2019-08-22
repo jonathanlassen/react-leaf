@@ -9,7 +9,7 @@ import "leaflet/dist/leaflet.css";
 
 function App() {
   return (
-    <Router>
+    <Router >
       <div>
         <nav className="flex items-center justify-between flex-wrap bg-blue-300 p-6">
           <div className="flex items-center flex-no-shrink text-white mr-6">
@@ -30,7 +30,7 @@ function App() {
         <Route path="/" exact component={MapLeaflet} />
         <Route path="/login" exact component={Login} />
         <Route path="/register" exact component={Register} />
-        <Route path="/shop/:id" component={MapLeaflet} />
+      
       </div>
     </Router>
   );

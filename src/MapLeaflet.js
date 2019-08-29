@@ -8,6 +8,10 @@ import LocateControl from './LocateControl';
 import RightSingle from "./RightSingle";
 import { authHeader } from './auth/AuthHeader';
 
+
+const faker = require('faker');
+faker.locale = "en_US";
+
 require('react-leaflet-markercluster/dist/styles.min.css');
 
 const customMarker = new L.icon({
@@ -30,19 +34,19 @@ function RightListShops(props) {
 
     const show = shops.map((shop) => 
         <div key={shop.id} className="p-3 m-2 xl:w-5/12 lg:w-full rounded overflow-hidden shadow-lg">
-          <img className=" h-32 w-full overflow-hidden"  alt="" src={returnRandomImage(shop.id)}  className="object-cover object-top h-48 w-full overflow-hidden" ></img>
-            <div className="font-bold text-l mb-2"> {shop.properties.Name}</div>
+          <img onClick={(e) => props.func(e,shop.id)} alt="" src={returnRandomImage(shop.id)}  className="object-cover object-top h-48 w-full overflow-hidden" ></img>
+            <div className="font-bold text-l mb-2" onClick={(e) => props.func(e,shop.id)} > {shop.properties.Name}</div>
             <p v-if="data.properties.Zip" className="text-grey-darker text-sm">    
               </p>
-              <p className="text-grey-darker text-sm">
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptatibus quia, nulla! Maiores et perferendis eaque, exercitationem praesentium nihil.
-              </p>
+              <p  className="text-grey-darker text-sm">
+              {faker.lorem.paragraph()}
+            </p>
             <div>
-              (978) 213-8369
+              {faker.phone.phoneNumberFormat()}
             </div>
             <div>
-              1258 Gorham St.
-              Lowell, MA 01852
+              {faker.address.streetAddress("###")} <br />
+              {faker.address.city()}, {faker.address.stateAbbr()} {faker.address.zipCode()}
             </div>
         </div> 
     );
@@ -54,8 +58,6 @@ function RightListShops(props) {
   );
 
   }
-// may need to change the functional component here to a class component to allow refs to be added
-
 
   function ListShops(props) {
     const shops = props.shops;
@@ -128,6 +130,7 @@ export default class MapLeaflet extends Component {
           bounds._southWest.lng < shop.geometry.coordinates[1] 
         ));
         this.setState({tempshops:tempshops});
+        this.setState({single:false})
    }
 
   componentDidMount() {
@@ -179,7 +182,7 @@ export default class MapLeaflet extends Component {
          
           </Map>
         </div>
-        {this.state.single===false ? <RightListShops shops={this.state.tempshops} /> : <RightSingle  shop={this.state.singleinfo} closeRightSingle={this.closeRightSingle}/>}
+        {this.state.single===false ? <RightListShops shops={this.state.tempshops} func={this.handleShopClick}/> : <RightSingle  shop={this.state.singleinfo} closeRightSingle={this.closeRightSingle}/>}
       </div>
     );
   }

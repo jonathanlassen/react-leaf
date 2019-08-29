@@ -1,10 +1,47 @@
 import { authHeader } from './AuthHeader';
-
 export const userService = {
     login,
     logout,
-    getAll
+    getAll,
+    register,
+    claim,
+    update
 };
+
+function claim(name, telephone, address, url, zip, id, user, description) {
+    const requestOptions = {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name, telephone, address, url, zip, id, user, description})
+    };
+
+    return fetch(`http://localhost:3000/api/claim`, requestOptions)
+    .then(handleResponse)
+    .then(claim => {
+        localStorage.setItem('user', JSON.stringify(claim));
+       
+    });
+
+}
+
+function update(name, telephone, address, url, zip, id, user, description) {
+    const requestOptions = {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name, telephone, address, url, zip, id, user, description})
+    };
+
+    return fetch(`http://localhost:3000/api/shop`, requestOptions)
+    .then(handleResponse)
+    .then(claim => {
+        localStorage.setItem('user', JSON.stringify(claim));
+       
+    });
+
+}
+
+
+
 
 function login(username, password) {
     const requestOptions = {
@@ -24,6 +61,25 @@ function login(username, password) {
             return user;
         });
 }
+function register(username, password, email) {
+    const requestOptions = {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ username, password, email})
+    };
+
+    return fetch(`http://localhost:3000/api/register`, requestOptions)
+        .then(handleResponse)
+        .then(user => {
+            // login successful if there's a jwt token in the response
+            if (user.token) {
+                // store user details and jwt token in local storage to keep user logged in between page refreshes
+                localStorage.setItem('user', JSON.stringify(user));
+            }
+            return user;
+        });
+}
+
 
 function logout() {
     // remove user from local storage to log user out

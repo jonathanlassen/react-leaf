@@ -3,6 +3,8 @@ import ReactDOM from "react-dom";
 import MapLeaflet from "./MapLeaflet";
 import Login from "./Login";
 import Register from "./Register";
+import Claim from "./Claim";
+import Edit from "./Edit";
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import "./styles.css";
 import "leaflet/dist/leaflet.css";
@@ -17,9 +19,7 @@ function App() {
           </div>
           <div className="w-full block flex-grow lg:flex lg:items-center lg:w-auto">
             <div className="text-sm flex-grow">
-              <a href="#responsive-header" className="block mt-4 lg:inline-block lg:mt-0 text-blue-lighter hover:text-white mr-4">
-                Autocomplete here
-              </a>  
+             
             </div>
             <div>
               <Link to='/login'><a className="inline-block text-sm px-4 py-2 leading-none border rounded text-white border-white hover:border-transparent hover:text-blue hover:bg-white mt-4 mr-2 lg:mt-0">Login</a></Link>
@@ -30,7 +30,8 @@ function App() {
         <Route path="/" exact component={MapLeaflet} />
         <Route path="/login" exact component={Login} />
         <Route path="/register" exact component={Register} />
-      
+        <Route path="/claim/:id" exact component={Claim} />
+        <Route path="/edit/:id" exact component={Edit} />
       </div>
     </Router>
   );

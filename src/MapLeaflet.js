@@ -6,7 +6,6 @@ import axios from 'axios';
 import MarkerClusterGroup from 'react-leaflet-markercluster';
 import LocateControl from './LocateControl';
 import RightSingle from "./RightSingle";
-import { authHeader } from './auth/AuthHeader';
 import LeafContext from './contexts/LeafContext';
 
 
@@ -139,17 +138,16 @@ export default class MapLeaflet extends Component {
    }
 
   componentDidMount() {
-    const { match: { params } } = this.props;
     axios.get(`http://localhost:3000/leaf`)
       .then(res => {
         const shops = res.data;
-        shops.map(shop => {
-            let tempshop = {
-              "id": shop.id, "type": "Feature", "properties": { "Name": shop.title, "address": shop.address,  "telephone": shop.telephone, "Zip": shop.zip }, "geometry": { "type": "Point", "coordinates": [  parseFloat(shop.lat),parseFloat(shop.long) ] } 
-            };
-           this.state.shops.push(tempshop);
-          })
-          // this.setState({ singleinfo: res.data });  
+
+        shops.forEach((shop) => {
+          let tempshop = {
+            "id": shop.id, "type": "Feature", "properties": { "Name": shop.title, "address": shop.address,  "telephone": shop.telephone, "Zip": shop.zip }, "geometry": { "type": "Point", "coordinates": [  parseFloat(shop.lat),parseFloat(shop.long) ] } 
+          };
+         this.state.shops.push(tempshop);
+        });
       }) 
   }
 

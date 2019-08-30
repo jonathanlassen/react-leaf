@@ -20,7 +20,9 @@ export class LeafProvider extends Component {
   }
 
   logoutUser = obj => {
-    this.setState({ user: null })
+    const user = {username: null};
+
+    this.setState({ user: user })
   }
 
   render() {

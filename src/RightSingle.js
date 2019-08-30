@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import { authHeader } from './auth/AuthHeader';
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 const faker = require('faker');
 faker.locale = "en_US";
@@ -18,9 +17,8 @@ extends Component {
           if (user)
           {  
             this.setState({user:user},  () => {
-              console.log(this.state.user);
+       
             }); 
-            console.log(this.props)
           }
      }
     
@@ -54,12 +52,12 @@ extends Component {
             <div>
             </div>
 
-            <div onClick={this.props.closeRightSingle}>close</div>
-            { !this.props.shop.owned && this.state.user.id && !this.state.user.shop_id && this.state.user.shop_id !== this.props.shop.id ? <div className="inline-block text-sm px-4 py-2 leading-none border rounded hover:border-transparent hover:text-blue hover:bg-white mt-4 mr-2 lg:mt-0">
+            <div className="inline-block text-sm px-4 py-2 leading-none border rounded hover:text-blue-700 border-blue-100 hover:bg-blue-200 hover:border-transparent text-white bg-blue-700 mt-4 lg:mt-0 mr-2" onClick={this.props.closeRightSingle}>CLOSE</div>
+            { !this.props.shop.owned && this.state.user.id && !this.state.user.shop_id && this.state.user.shop_id !== this.props.shop.id ? <div className="inline-block text-sm px-4 py-2 leading-none border rounded hover:text-blue-700 border-blue-100 hover:bg-blue-200 hover:border-transparent text-white bg-blue-700 mt-4 lg:mt-0 mr-2">
             <Link to={'claim/'+this.props.shop.id} >CLAIM THIS SHOP</Link>
               </div> : <div></div>}
 
-            { this.props.shop.owned && this.state.user.id  && this.state.user.shop_id === this.props.shop.id ? <div className="inline-block text-sm px-4 py-2 leading-none border rounded hover:border-transparent hover:text-blue hover:bg-white mt-4 mr-2 lg:mt-0">
+            { this.props.shop.owned && this.state.user.id  && this.state.user.shop_id === this.props.shop.id ? <div className="inline-block text-sm px-4 py-2 leading-none border rounded hover:text-blue-700 border-blue-100 hover:bg-blue-200 hover:border-transparent text-white bg-blue-700 mt-4 lg:mt-0 mr-2">
             <Link to={'edit/'+this.props.shop.id} >EDIT THIS SHOP</Link>
               </div> : <div></div>}
          

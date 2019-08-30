@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { userService } from "./auth/UserService";
 import LeafContext from './contexts/LeafContext';
+import "./Login.css";
 
 export default class Login extends Component {
     static contextType = LeafContext;
@@ -15,7 +16,7 @@ export default class Login extends Component {
             username.value = '';
             password.value = '';
             this.context.setUser(res);
-            //this.props.history.push('/')
+            this.props.history.push('/')
           })
           .catch(res => {
             this.setState({ error: res.error });
@@ -26,7 +27,8 @@ export default class Login extends Component {
       const { error } = this.state; 
 
       return (
-        <fieldset>
+        <div className='md:flex justify-center'>
+        <fieldset className='bg-indigo-100 p-8 mt-8'>
         <form className='LoginForm' onSubmit={this.handleSubmit}>
           <div role='alert'>
             {error && <p className='form-error'>{error}</p>}
@@ -55,11 +57,12 @@ export default class Login extends Component {
               required
             />
           </div>
-          <button type='submit' className='button'>
+          <button type='submit' className='submitButton'>
             Login
           </button>
         </form>
       </fieldset>
+      </div>
       );
     }
   }

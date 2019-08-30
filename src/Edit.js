@@ -46,9 +46,10 @@ export default class Edit extends Component {
     render() {   
       const { error } = this.state; 
       return (
-        <div>  { this.props.match.params.id && this.state.user ?    
+        <div className='flex justify-center'>  { this.props.match.params.id && this.state.user ?    
 
-        <fieldset>
+          
+          <fieldset className='w-1/2 bg-indigo-100 p-8 mt-8'>
         <form className='ClaimForm' onSubmit={this.handleSubmit}>
           <div role='alert'>
             {error && <p className='form-error'>{error}</p>}
@@ -151,7 +152,7 @@ export default class Edit extends Component {
               defaultValue={this.state.singleinfo.description}
             />
           </div>
-          <button type='submit' className='button'>
+          <button type='submit' className='submitButton'>
             Edit
           </button>
         </form>

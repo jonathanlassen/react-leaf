@@ -13,14 +13,17 @@ export default class Navbar extends Component {
      
       state = { error: null };
 
+      componentDidMount() {
+        let user = JSON.parse(localStorage.getItem('user'));
+        if (user)
+        {  
+            this.context.setUser(user); 
+        }
+      }
 
       handleLogout(e) {
-
-        console.log('hi')
         userService.logout()
         this.context.logoutUser();
-
-
       }
 
     render() {   
@@ -34,20 +37,20 @@ export default class Navbar extends Component {
           
           </div>
          
-              {!this.context.user && ( 
+              {(!this.context.user.username) && ( 
                 <div>
-                    <Link className="inline-block text-sm px-4 py-2 leading-none border rounded text-white border-white hover:border-transparent hover:text-blue hover:bg-white mt-4 mr-2 lg:mt-0" to='/login'>Login</Link>
-                    <Link className="inline-block text-sm px-4 py-2 leading-none border rounded text-white border-white hover:border-transparent hover:text-blue hover:bg-white mt-4 lg:mt-0" to='/register'>Register</Link>
+                    <Link className="inline-block text-sm px-4 py-2 leading-none border rounded text-blue-700 border-blue-100 bg-blue-200 hover:border-transparent hover:text-white hover:bg-blue-700 mt-4 lg:mt-0 mr-2" to='/login'>Login</Link>
+                    <Link className="inline-block text-sm px-4 py-2 leading-none border rounded text-blue-700 border-blue-100 bg-blue-200 hover:border-transparent hover:text-white hover:bg-blue-700 mt-4 lg:mt-0" to='/register'>Register</Link>
                 </div>
                 )}
 
-                {this.context.user && ( 
+            {this.context.user.username && ( 
                 <div>
-
-                    <a onClick={this.handleLogout}  className="inline-block text-sm px-4 py-2 leading-none border rounded text-white border-white hover:border-transparent hover:text-blue hover:bg-white mt-4 lg:mt-0">Logout</a>
+                    <span className="pr-3">Welcome back{this.context.user.username}!</span>
+                    <div onClick={this.handleLogout}  className="inline-block text-sm px-4 py-2 leading-none border rounded text-blue-700 border-blue-100 bg-blue-200 hover:border-transparent hover:text-white hover:bg-blue-700 mt-4 lg:mt-0">Logout</div>
                 </div>
                 )}
-    
+
          
         </div> 
       </nav>  

@@ -3,9 +3,6 @@ import { userService } from "./auth/UserService";
 
 export default class Login extends Component {
 
-    constructor(props) {
-        super(props);
-      }
 
       state = { error: null };
       handleSubmit = ev => {
@@ -26,7 +23,8 @@ export default class Login extends Component {
     render() {   
       const { error } = this.state; 
       return (
-        <fieldset>
+        <div className='md:flex justify-center'>
+        <fieldset className='bg-indigo-100 p-8 mt-8'>
         <form className='RegesterForm' onSubmit={this.handleSubmit}>
           <div role='alert'>
             {error && <p className='form-error'>{error}</p>}
@@ -67,11 +65,12 @@ export default class Login extends Component {
             />
           </div>
   
-          <button type='submit' className='button'>
-            Login
+          <button type='submit' className='submitButton'>
+            Register
           </button>
         </form>
       </fieldset>
+      </div>
       );
     }
   }

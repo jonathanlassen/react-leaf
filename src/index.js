@@ -6,9 +6,10 @@ import Register from "./Register";
 import Claim from "./Claim";
 import Edit from "./Edit";
 import Navbar from "./Navbar";
-import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import { BrowserRouter as Router, Route } from "react-router-dom";
 import { LeafProvider } from './contexts/LeafContext';
 import "./styles.css";
+import "./index.css";
 import "leaflet/dist/leaflet.css";
 
 function App() {

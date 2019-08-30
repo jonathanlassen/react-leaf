@@ -21,7 +21,7 @@ export default class Claim extends Component {
         //console.log(this.props)
       }
 
-      axios.get(`http://localhost:3000/shop/`+this.props.match.params.id)
+      axios.get(`https://powerful-wildwood-94772.herokuapp.com/shop/`+this.props.match.params.id)
       .then(res => {
         this.setState({singleinfo: res.data });
       }) 

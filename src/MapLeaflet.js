@@ -149,7 +149,7 @@ export default class MapLeaflet extends Component {
           };
          this.state.shops.push(tempshop);
         });
-        console.log(this.state.shops)
+        //console.log(this.state.shops)
       }) 
   }
 

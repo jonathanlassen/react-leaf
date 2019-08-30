@@ -18,7 +18,7 @@ function claim(name, telephone, address, url, zip, id, user, description, statec
         body: JSON.stringify({ name, telephone, address, url, zip, id, user, description, statecode, city })
     };
 
-    return fetch(`http://localhost:3000/api/claim`, requestOptions)
+    return fetch(`https://powerful-wildwood-94772.herokuapp.com/api/claim`, requestOptions)
     .then(handleResponse)
     .then(claim => {
         localStorage.setItem('user', JSON.stringify(claim));
@@ -34,7 +34,7 @@ function update(name, telephone, address, url, zip, id, user, description,statec
         body: JSON.stringify({ name, telephone, address, url, zip, id, user, description, statecode, city })
     };
 
-    return fetch(`http://localhost:3000/api/shop`, requestOptions)
+    return fetch(`https://powerful-wildwood-94772.herokuapp.com/api/shop`, requestOptions)
     .then(handleResponse)
     .then(claim => {
        
@@ -57,7 +57,7 @@ function login(username, password) {
         body: JSON.stringify({ username, password })
     };
 
-    return fetch(`http://localhost:3000/api/login`, requestOptions)
+    return fetch(`https://powerful-wildwood-94772.herokuapp.com/api/login`, requestOptions)
         .then(handleResponse)
         .then(user => {
             // login successful if there's a jwt token in the response
@@ -75,7 +75,7 @@ function register(username, password, email) {
         body: JSON.stringify({ username, password, email})
     };
 
-    return fetch(`http://localhost:3000/api/register`, requestOptions)
+    return fetch(`https://powerful-wildwood-94772.herokuapp.com/api/register`, requestOptions)
         .then(handleResponse)
         .then(user => {
             // login successful if there's a jwt token in the response

@@ -34,20 +34,21 @@ function RightListShops(props) {
 
     const show = shops.map((shop) => 
         <div key={shop.id} className="p-3 m-2 xl:w-5/12 lg:w-full rounded overflow-hidden shadow-lg">
-          <img onClick={(e) => props.func(e,shop.id)} alt="" src={returnRandomImage(shop.id)}  className="object-cover object-top h-48 w-full overflow-hidden" ></img>
-            <div className="font-bold text-l mb-2" onClick={(e) => props.func(e,shop.id)} > {shop.properties.Name}</div>
+          <img onClick={(e) => props.func(e,shop.id)} alt="" src={returnRandomImage(shop.id)}  className="object-cover object-top h-48 w-full overflow-hidden cursor-pointer" ></img>
+            <div className="font-bold text-lg mt-1 mb-1" onClick={(e) => props.func(e,shop.id)} > {shop.properties.Name}</div>
             <p  className="text-grey-darker text-sm">
               {!shop.properties.description ? faker.lorem.paragraph() : shop.properties.description }
             </p>
-            <div>
+            <div  className="mt-1">
               {!shop.properties.telephone ? faker.phone.phoneNumberFormat() : shop.properties.telephone }
               
             </div>
-            <div>
+            <div  className="mt-1 text-sm">
             {!shop.properties.address ? faker.address.streetAddress("###") : shop.properties.address }
              <br />
-              {faker.address.city()}, {faker.address.stateAbbr()} 
-              {!shop.properties.zip ? faker.address.zipCode() : shop.properties.zip }
+            {!shop.properties.city ? faker.address.city() : shop.properties.city }
+              ,&nbsp;{!shop.properties.statecode ? faker.address.stateAbbr() : shop.properties.statecode }
+              ,&nbsp;{!shop.properties.zip ? faker.address.zipCode() : shop.properties.zip }
             </div>
         </div> 
     );
@@ -102,7 +103,7 @@ export default class MapLeaflet extends Component {
   handleShopClick(e, shopid) {
   //  const popup = e.target.getPopup();
    // const content = popup.setContent('yeah');
-    axios.get(`http://localhost:3000/shop/`+shopid)
+    axios.get(`https://powerful-wildwood-94772.herokuapp.com/shop/`+shopid)
     .then(res => {
       this.setState({singleinfo: res.data });
       this.setState({single:true})
@@ -138,16 +139,17 @@ export default class MapLeaflet extends Component {
    }
 
   componentDidMount() {
-    axios.get(`http://localhost:3000/leaf`)
+    axios.get(`https://powerful-wildwood-94772.herokuapp.com/leaf`)
       .then(res => {
         const shops = res.data;
 
         shops.forEach((shop) => {
           let tempshop = {
-            "id": shop.id, "type": "Feature", "properties": { "Name": shop.title, "address": shop.address,  "telephone": shop.telephone, "Zip": shop.zip }, "geometry": { "type": "Point", "coordinates": [  parseFloat(shop.lat),parseFloat(shop.long) ] } 
+            "id": shop.id, "type": "Feature", "properties": { "Name": shop.title, "address": shop.address,  "telephone": shop.telephone, "zip": shop.zip, "description": shop.description, "statecode": shop.statecode, "city": shop.city }, "geometry": { "type": "Point", "coordinates": [  parseFloat(shop.lat),parseFloat(shop.long) ] } 
           };
          this.state.shops.push(tempshop);
         });
+        console.log(this.state.shops)
       }) 
   }
 

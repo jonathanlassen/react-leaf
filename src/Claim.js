@@ -1,25 +1,32 @@
 import React, { Component } from "react";
 import { userService } from "./auth/UserService";
-
+import axios from 'axios';
 export default class Claim extends Component {
 
     constructor(props) {
         super(props);
         this.state = {
-          user: {}
+          user: {},
+          singleinfo: {}
         };
       }
      // authHeader()
      componentDidMount() {
-          let user = JSON.parse(localStorage.getItem('user'));
-          if (user)
-          {  
-            this.setState({user:user},  () => {
-              console.log(this.state.user);
-            }); 
-            console.log(this.props)
-          }
-     }
+      let user = JSON.parse(localStorage.getItem('user'));
+      if (user)
+      {  
+        this.setState({user:user},  () => {
+          //console.log(this.state.user);
+        }); 
+        //console.log(this.props)
+      }
+
+      axios.get(`http://localhost:3000/shop/`+this.props.match.params.id)
+      .then(res => {
+        this.setState({singleinfo: res.data });
+      }) 
+
+ }
 
      handleSubmit = ev => {
         ev.preventDefault();
@@ -38,9 +45,9 @@ export default class Claim extends Component {
     render() {   
       const { error } = this.state; 
       return (
-        <div>  { this.props.match.params.id && this.state.user ?    
+        <div className='flex justify-center'>  { this.props.match.params.id && this.state.user ?    
 
-        <fieldset>
+          <fieldset className='w-1/2 bg-indigo-100 p-8 mt-8'>
         <form className='ClaimForm' onSubmit={this.handleSubmit}>
           <div role='alert'>
             {error && <p className='form-error'>{error}</p>}
@@ -55,6 +62,7 @@ export default class Claim extends Component {
               id='claim-name-input'
               name='name'
               required
+              defaultValue={this.state.singleinfo.name}
             />
           </div>
           <div>
@@ -66,6 +74,7 @@ export default class Claim extends Component {
               id='claim-telephone-input'
               name='telephone'
               required
+              defaultValue={this.state.singleinfo.telephone}
             />
           </div>
           <div>
@@ -77,6 +86,7 @@ export default class Claim extends Component {
               id='claim-address-input'
               name='address'
               required
+              defaultValue={this.state.singleinfo.address}
             />
           </div>
           <div>
@@ -88,28 +98,31 @@ export default class Claim extends Component {
               id='claim-url-input'
               name='url'
               required
+              defaultValue={this.state.singleinfo.url}
             />
           </div>
           <div>
             <label htmlFor='claim-statecode-input' className='form-label'>
-              Url
+              Statecode
             </label>
             <input
               className='form-input'
               id='claim-statecode-input'
               name='statecode'
               required
+              defaultValue={this.state.singleinfo.statecode}
             />
           </div>
           <div>
             <label htmlFor='claim-city-input' className='form-label'>
-              Url
+              City
             </label>
             <input
               className='form-input'
               id='claim-city-input'
               name='city'
               required
+              defaultValue={this.state.singleinfo.city}
             />
           </div>
           <div>
@@ -121,6 +134,7 @@ export default class Claim extends Component {
               id='claim-zip-input'
               name='zip'
               required
+              defaultValue={this.state.singleinfo.zip}
             />
           </div>
 
@@ -133,9 +147,10 @@ export default class Claim extends Component {
               id='claim-description-input'
               name='description'
               required
+              defaultValue={this.state.singleinfo.description}
             />
           </div>
-          <button type='submit' className='button'>
+          <button type='submit' className='submitButton'>
             Claim
           </button>
         </form>

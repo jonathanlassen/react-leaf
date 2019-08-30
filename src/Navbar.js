@@ -30,7 +30,7 @@ export default class Navbar extends Component {
       return (
         <nav className="flex items-center justify-between flex-wrap bg-blue-300 p-6">
         <div className="flex items-center flex-no-shrink text-white mr-6">
-          <span className="font-semibold text-xl tracking-tight">Find a Frameshop</span>
+          <Link className="font-semibold text-xl tracking-tight" to='/'>Find A Frameshop</Link>
         </div>
         <div className="w-full block flex-grow lg:flex lg:items-center lg:w-auto">
           <div className="text-sm flex-grow">
@@ -47,7 +47,7 @@ export default class Navbar extends Component {
             {this.context.user.username && ( 
                 <div>
                     <span className="pr-3">Welcome back{this.context.user.username}!</span>
-                    <div onClick={this.handleLogout}  className="inline-block text-sm px-4 py-2 leading-none border rounded text-blue-700 border-blue-100 bg-blue-200 hover:border-transparent hover:text-white hover:bg-blue-700 mt-4 lg:mt-0">Logout</div>
+                    <div onClick={this.handleLogout}  className="inline-block text-sm px-4 py-2 leading-none border rounded text-blue-700 border-blue-100 bg-blue-200 hover:border-transparent hover:text-white hover:bg-blue-700 mt-4 lg:mt-0 cursor-pointer">Logout</div>
                 </div>
                 )}
 

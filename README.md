@@ -1,6 +1,6 @@
 ## Find a Framer
 
-Find a Framer is a project that allows potential custom framing customers to locate nearby frame shops, and allows frame shop owners to 'claim,' edit and update their shop information.
+Find a Framer is a project that allows potential custom framing customers to locate nearby frame shops, and allows frame shop owners to 'claim,' edit and update their shop information. There are currently approximately 2,500 listings in the database, that represent a fairly complete listing of custom framing shops in the US east of the Mississippi (a first of its kind). Remaining US coverage will be complete by the end of September, 2019. 
 
 ### Live Link
 
@@ -8,8 +8,8 @@ A live version of the app can be found at [https://react-leaf.jonathanlassen.now
 
 ### Screenshots
 
- [screenshot 1](https://res.cloudinary.com/dcdv6emgi/image/upload/v1567184313/Screenshot_from_2019-08-30_12-47-10_kvs6da.png)
- [screenshot 1](https://res.cloudinary.com/dcdv6emgi/image/upload/v1567184312/Screenshot_from_2019-08-30_12-47-27_j1brcu.png)
+ ![screenshot 1](https://res.cloudinary.com/dcdv6emgi/image/upload/v1567184313/Screenshot_from_2019-08-30_12-47-10_kvs6da.png)
+ ![screenshot 1](https://res.cloudinary.com/dcdv6emgi/image/upload/v1567184312/Screenshot_from_2019-08-30_12-47-27_j1brcu.png)
 
 ### Technology
 

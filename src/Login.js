@@ -1,11 +1,10 @@
 import React, { Component } from "react";
 import { userService } from "./auth/UserService";
+import LeafContext from './contexts/LeafContext';
 
 export default class Login extends Component {
+    static contextType = LeafContext;
 
-    constructor(props) {
-        super(props);
-      }
       state = { error: null };
       handleSubmit = ev => {
         ev.preventDefault();
@@ -15,7 +14,8 @@ export default class Login extends Component {
           .then(res => {
             username.value = '';
             password.value = '';
-            this.props.history.push('/')
+            this.context.setUser(res);
+            //this.props.history.push('/')
           })
           .catch(res => {
             this.setState({ error: res.error });
@@ -24,6 +24,7 @@ export default class Login extends Component {
 
     render() {   
       const { error } = this.state; 
+
       return (
         <fieldset>
         <form className='LoginForm' onSubmit={this.handleSubmit}>

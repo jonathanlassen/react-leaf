@@ -44,10 +44,11 @@ extends Component {
               {faker.lorem.paragraphs()}
             </p>
             <div>
-              {faker.phone.phoneNumberFormat()}
+              {!this.props.shop.telephone ? faker.phone.phoneNumberFormat() : this.props.shop.telephone }
             </div>
             <div>
-              {faker.address.streetAddress("###")} <br />
+              {!this.props.shop.telephone ? faker.address.streetAddress("###") : this.props.shop.address }
+              <br />
               {faker.address.city()}, {faker.address.stateAbbr()} {faker.address.zipCode()}
             </div>
             <div>

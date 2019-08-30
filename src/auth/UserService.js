@@ -1,4 +1,6 @@
 import { authHeader } from './AuthHeader';
+
+
 export const userService = {
     login,
     logout,
@@ -8,11 +10,12 @@ export const userService = {
     update
 };
 
-function claim(name, telephone, address, url, zip, id, user, description) {
+
+function claim(name, telephone, address, url, zip, id, user, description, statecode, city ) {
     const requestOptions = {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ name, telephone, address, url, zip, id, user, description})
+        body: JSON.stringify({ name, telephone, address, url, zip, id, user, description, statecode, city })
     };
 
     return fetch(`http://localhost:3000/api/claim`, requestOptions)
@@ -24,26 +27,30 @@ function claim(name, telephone, address, url, zip, id, user, description) {
 
 }
 
-function update(name, telephone, address, url, zip, id, user, description) {
+function update(name, telephone, address, url, zip, id, user, description,statecode, city ) {
     const requestOptions = {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ name, telephone, address, url, zip, id, user, description})
+        body: JSON.stringify({ name, telephone, address, url, zip, id, user, description, statecode, city })
     };
 
     return fetch(`http://localhost:3000/api/shop`, requestOptions)
     .then(handleResponse)
     .then(claim => {
-        localStorage.setItem('user', JSON.stringify(claim));
+       
        
     });
 
 }
 
-
+function logout() {
+    localStorage.removeItem('user');
+    return;
+}
 
 
 function login(username, password) {
+
     const requestOptions = {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -78,12 +85,6 @@ function register(username, password, email) {
             }
             return user;
         });
-}
-
-
-function logout() {
-    // remove user from local storage to log user out
-    localStorage.removeItem('user');
 }
 
 function getAll() {

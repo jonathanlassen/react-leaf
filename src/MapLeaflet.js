@@ -7,6 +7,7 @@ import MarkerClusterGroup from 'react-leaflet-markercluster';
 import LocateControl from './LocateControl';
 import RightSingle from "./RightSingle";
 import { authHeader } from './auth/AuthHeader';
+import LeafContext from './contexts/LeafContext';
 
 
 const faker = require('faker');
@@ -36,17 +37,18 @@ function RightListShops(props) {
         <div key={shop.id} className="p-3 m-2 xl:w-5/12 lg:w-full rounded overflow-hidden shadow-lg">
           <img onClick={(e) => props.func(e,shop.id)} alt="" src={returnRandomImage(shop.id)}  className="object-cover object-top h-48 w-full overflow-hidden" ></img>
             <div className="font-bold text-l mb-2" onClick={(e) => props.func(e,shop.id)} > {shop.properties.Name}</div>
-            <p v-if="data.properties.Zip" className="text-grey-darker text-sm">    
-              </p>
-              <p  className="text-grey-darker text-sm">
-              {faker.lorem.paragraph()}
+            <p  className="text-grey-darker text-sm">
+              {!shop.properties.description ? faker.lorem.paragraph() : shop.properties.description }
             </p>
             <div>
-              {faker.phone.phoneNumberFormat()}
+              {!shop.properties.telephone ? faker.phone.phoneNumberFormat() : shop.properties.telephone }
+              
             </div>
             <div>
-              {faker.address.streetAddress("###")} <br />
-              {faker.address.city()}, {faker.address.stateAbbr()} {faker.address.zipCode()}
+            {!shop.properties.address ? faker.address.streetAddress("###") : shop.properties.address }
+             <br />
+              {faker.address.city()}, {faker.address.stateAbbr()} 
+              {!shop.properties.zip ? faker.address.zipCode() : shop.properties.zip }
             </div>
         </div> 
     );
@@ -76,6 +78,9 @@ function RightListShops(props) {
     );
   }
 export default class MapLeaflet extends Component {
+
+  static contextType = LeafContext;
+
   constructor(props) {
     super(props);
     this.state = {
@@ -140,7 +145,7 @@ export default class MapLeaflet extends Component {
         const shops = res.data;
         shops.map(shop => {
             let tempshop = {
-              "id": shop.id, "type": "Feature", "properties": { "Name": shop.title, "Zip": shop.zip }, "geometry": { "type": "Point", "coordinates": [  parseFloat(shop.lat),parseFloat(shop.long) ] } 
+              "id": shop.id, "type": "Feature", "properties": { "Name": shop.title, "address": shop.address,  "telephone": shop.telephone, "Zip": shop.zip }, "geometry": { "type": "Point", "coordinates": [  parseFloat(shop.lat),parseFloat(shop.long) ] } 
             };
            this.state.shops.push(tempshop);
           })

@@ -23,11 +23,11 @@ export default class Claim extends Component {
 
      handleSubmit = ev => {
         ev.preventDefault();
-        const { name, telephone, address, url, zip, description } = ev.target;
+        const { name, telephone, address, url, zip, description, statecode, city } = ev.target;
         this.setState({ error: null });
-        userService.claim(name.value, telephone.value, address.value, url.value, zip.value, this.props.match.params.id, this.state.user, description.value )
+        userService.claim(name.value, telephone.value, address.value, url.value, zip.value, this.props.match.params.id, this.state.user, description.value, statecode.value, city.value )
         .then(res => {
-           
+            this.props.history.push('/');
           })
           .catch(res => {
             this.setState({ error: res.error });
@@ -87,6 +87,28 @@ export default class Claim extends Component {
               className='form-input'
               id='claim-url-input'
               name='url'
+              required
+            />
+          </div>
+          <div>
+            <label htmlFor='claim-statecode-input' className='form-label'>
+              Url
+            </label>
+            <input
+              className='form-input'
+              id='claim-statecode-input'
+              name='statecode'
+              required
+            />
+          </div>
+          <div>
+            <label htmlFor='claim-city-input' className='form-label'>
+              Url
+            </label>
+            <input
+              className='form-input'
+              id='claim-city-input'
+              name='city'
               required
             />
           </div>

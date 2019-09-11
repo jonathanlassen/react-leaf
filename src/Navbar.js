@@ -1,3 +1,6 @@
+/* eslint-disable jsx-a11y/no-static-element-interactions */
+/* eslint-disable jsx-a11y/click-events-have-key-events */
+/* eslint-disable react/destructuring-assignment */
 import React, { Component } from 'react';
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
 import LeafContext from './contexts/LeafContext';
@@ -10,8 +13,6 @@ export default class Navbar extends Component {
     super(props);
     this.handleLogout = this.handleLogout.bind(this);
   }
-
-  state = { error: null };
 
   componentDidMount() {
     const user = JSON.parse(localStorage.getItem('user'));

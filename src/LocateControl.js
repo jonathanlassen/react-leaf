@@ -1,6 +1,8 @@
-import { Component } from "react";
-import { withLeaflet } from "react-leaflet";
-import Locate from "leaflet.locatecontrol";
+/* eslint-disable react/destructuring-assignment */
+/* eslint-disable react/prop-types */
+import { Component } from 'react';
+import { withLeaflet } from 'react-leaflet';
+import Locate from 'leaflet.locatecontrol';
 
 class LocateControl extends Component {
   componentDidMount() {

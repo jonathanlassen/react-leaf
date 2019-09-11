@@ -1,3 +1,7 @@
+/* eslint-disable jsx-a11y/label-has-for */
+/* eslint-disable react/prop-types */
+/* eslint-disable react/destructuring-assignment */
+/* eslint-disable jsx-a11y/label-has-associated-control */
 import React, { Component } from 'react';
 import { userService } from './auth/UserService';
 import LeafContext from './contexts/LeafContext';

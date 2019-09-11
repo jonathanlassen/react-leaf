@@ -4,13 +4,12 @@ import { BrowserRouter } from 'react-router-dom';
 import Navbar from '../Navbar';
 import { LeafProvider } from '../contexts/LeafContext';
 
-
 it('renders without crashing', () => {
   const div = document.createElement('div');
   ReactDOM.render(
     <BrowserRouter>
-     <LeafProvider>
-      <Navbar />
+      <LeafProvider>
+        <Navbar />
       </LeafProvider>
     </BrowserRouter>,
     div

@@ -18,7 +18,7 @@ export default class Login extends Component {
       .then(res => {
         username.value = '';
         password.value = '';
-        this.props.history.push('/map');
+        this.props.history.push('/login');
       })
       .catch(res => {
         this.setState({ error: res.error });
@@ -32,7 +32,7 @@ export default class Login extends Component {
         <form className="RegesterForm" onSubmit={this.handleSubmit}>
           <fieldset className="bg-indigo-100 p-8 mt-8">
             <div role="alert">
-              {error && <p className="form-error">{error}</p>}
+              {error && <p className="text-red-700">{error}</p>}
             </div>
             <div>
               <label htmlFor="register-username-input" className="form-label">

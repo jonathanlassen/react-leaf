@@ -37,7 +37,7 @@ export default class Login extends Component {
         <form className="LoginForm" onSubmit={this.handleSubmit}>
           <fieldset className="bg-indigo-100 p-8 mt-8">
             <div role="alert">
-              {error && <p className="form-error">{error}</p>}
+              {error && <p className="text-red-700">{error}</p>}
             </div>
             <div>
               <label htmlFor="login-username-input" className="form-label">

@@ -57,7 +57,7 @@ function RightListShops(props) {
   const show = shops.map(shop => (
     <div
       key={shop.id}
-      className="p-3 m-2 xl:w-5/12 lg:w-full rounded overflow-hidden shadow-lg"
+      className="p-3 m-2 w-auto lg:w-1/2 rounded overflow-hidden shadow-lg"
     >
       <img
         onClick={e => props.func(e, shop.id)}
@@ -99,7 +99,7 @@ function RightListShops(props) {
   ));
 
   return (
-    <div className="w-2/5 flex flex-row flex-wrap overflow-auto p-8 items-stretch h-screen justify-around">
+    <div className="flex flex-row flex-wrap p-2 items-stretch h-screen justify-around">
       {show}
     </div>
   );
@@ -223,13 +223,13 @@ export default class MapLeaflet extends Component {
     };
 
     return (
-      <div className="flex">
-        <div id="map2" className="w-3/5">
+      <div className="flex lg:h-screen">
+        <div id="map2" className="flex-1">
           <Map
             ref={this.refMap}
             onMoveend={this.onMoveEnd}
             className="markercluster-map"
-            style={{ height: '100vh' }}
+            style={{ height: '50%' }}
             center={position}
             zoom={this.state.zoom}
             maxZoom={18}
@@ -247,18 +247,18 @@ export default class MapLeaflet extends Component {
               />
             </MarkerClusterGroup>
           </Map>
+          {this.state.single === false ? (
+            <RightListShops
+              shops={this.state.tempshops}
+              func={this.handleShopClick}
+            />
+          ) : (
+            <RightSingle
+              shop={this.state.singleinfo}
+              closeRightSingle={this.closeRightSingle}
+            />
+          )}
         </div>
-        {this.state.single === false ? (
-          <RightListShops
-            shops={this.state.tempshops}
-            func={this.handleShopClick}
-          />
-        ) : (
-          <RightSingle
-            shop={this.state.singleinfo}
-            closeRightSingle={this.closeRightSingle}
-          />
-        )}
       </div>
     );
   }

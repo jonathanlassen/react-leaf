@@ -130,6 +130,7 @@ function register(username, password, email) {
         // store user details and jwt token in local storage to keep user logged in between page refreshes
         localStorage.setItem('user', JSON.stringify(user));
       }
+
       return user;
     });
 }
@@ -150,8 +151,8 @@ function handleResponse(response) {
         // auto logout if 401 response returned from api
         logout();
       }
-      const error = (data && data.message) || response.statusText;
-      return Promise.reject(error);
+
+      return Promise.reject(data);
     }
     return data;
   });

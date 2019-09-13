@@ -77,7 +77,7 @@ export default class Edit extends Component {
           <form className="ClaimForm" onSubmit={this.handleSubmit}>
             <fieldset className="w-1/2 bg-indigo-100 p-8 mt-8">
               <div role="alert">
-                {error && <p className="form-error">{error}</p>}
+                {error && <p className="text-red-700">{error}</p>}
               </div>
               <div>
                 <label htmlFor="claim-name-input" className="form-label">

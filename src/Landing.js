@@ -9,10 +9,10 @@ export default class Landing extends Component {
 
   render() {
     return (
-      <div className="container mx-auto mt-24 h-48 sm:max-w-md md:max-w-lg lg:max-w-xl xl:max-w-2xl">
+      <div className="container mx-auto mt-24 h-48 sm:w-auto px-4 md:max-w-lg lg:max-w-xl xl:max-w-2xl ">
         <div className="text-center text-2xl font-black">Find A Frameshop</div>
 
-        <div className="mt-4">
+        <div className="mt-4 ">
           This innovative application allows potential custom framing customers
           to find a nearby shop, and provides a marketing platform to custom
           framers.

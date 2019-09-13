@@ -47,7 +47,7 @@ export default class RightSingle extends Component {
     }
 
     return (
-      <div className="w-2/5 flex flex-row flex-wrap overflow-auto p-8 items-stretch h-screen justify-around">
+      <div className="p-3 m-2 w-auto  flex flex-row flex-wrap items-stretch justify-around">
         <div className="rounded overflow-hidden shadow-lg">
           <div className="px-3 py-3">
             <img
